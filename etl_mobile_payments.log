@@ -1,0 +1,26 @@
+2025-04-28 10:47:10,004:ERROR:Extraction failed: [Errno 2] No such file or directory: 'mobile_payments_data.csv'
+2025-04-28 10:48:10,121:INFO:Extracted 216 rows and 6 columns from mobile_payments_data.csv.
+2025-04-28 10:49:16,053:INFO:Started data transformation.
+2025-04-28 10:49:16,056:INFO:Missing values before cleaning:
+Year                                                 0
+Month                                                0
+Active Agents                                        0
+Total Registered Mobile Money Accounts (Millions)    0
+Total Agent Cash in Cash Out (Volume Million)        0
+Total Agent Cash in Cash Out (Value KSh billions)    0
+dtype: int64
+2025-04-28 10:49:16,063:INFO:Data transformation completed successfully.
+2025-04-28 10:49:56,992:INFO:Extracted 216 rows and 6 columns from mobile_payments_data.csv.
+2025-04-28 10:49:58,585:INFO:Started data transformation.
+2025-04-28 10:49:58,586:INFO:Missing values before cleaning:
+Year                                                 0
+Month                                                0
+Active Agents                                        0
+Total Registered Mobile Money Accounts (Millions)    0
+Total Agent Cash in Cash Out (Volume Million)        0
+Total Agent Cash in Cash Out (Value KSh billions)    0
+dtype: int64
+2025-04-28 10:49:58,592:INFO:Data transformation completed successfully.
+2025-04-28 10:51:03,559:ERROR:Loading failed: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "your_username"
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
