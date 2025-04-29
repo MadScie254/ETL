@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="mobile_payments.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="4136"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="0" parent="0"/><expanded_item id="1" parent="1"/><expanded_item id="0" parent="2"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="mobile_payments" custom_title="0" dock_id="1" table="4,15:mainmobile_payments"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011e00ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">SELECT 
+    Date, 
+    &quot;Total Agent Cash in Cash Out (Volume Million)&quot;, 
+    &quot;Total Agent Cash in Cash Out (Value KSh billions)&quot;
+FROM 
+    mobile_payments
+WHERE 
+    &quot;Total Agent Cash in Cash Out (Volume Million)&quot; &lt; 100
+    AND &quot;Total Agent Cash in Cash Out (Value KSh billions)&quot; &gt; 500
+ORDER BY 
+    Date;</sql><sql name="SQL 2*">SELECT 
+    Date, 
+    &quot;Total Agent Cash in Cash Out (Value KSh billions)&quot; AS TotalTransactionValue
+FROM 
+    mobile_payments
+ORDER BY 
+    TotalTransactionValue DESC
+LIMIT 1</sql><sql name="SQL 3*">SELECT 
+    Date, 
+    &quot;Active Agents&quot;
+FROM 
+    mobile_payments
+ORDER BY 
+    &quot;Active Agents&quot; DESC
+LIMIT 3</sql><current_tab id="2"/></tab_sql></sqlb_project>

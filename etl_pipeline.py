@@ -17,7 +17,7 @@ def send_email_alert(subject, body, to_email):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     sender_email = "danieleinstein1998@gmail.com"
-    sender_password = "4805640@kmt"  # Gmail App Password
+    sender_password = "4805mt"  # Gmail App Password
 
     msg = MIMEMultipart()
     msg['From'] = sender_email
