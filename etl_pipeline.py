@@ -40,7 +40,7 @@ def send_email_alert(subject, body, to_email):
 # ------------------------
 def send_whatsapp_alert(body):
     account_sid = "USd122d1bc28cba2bde526af8b46183ab9"
-    auth_token = "your_twilio_auth_token"
+    auth_token = "887f5460778dfe0ccb3be1549712edd9"
     from_whatsapp_number = 'whatsapp:+14155238886'  # Twilio Sandbox Number
     to_whatsapp_number = 'whatsapp:+254742007277'
 
