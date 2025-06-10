@@ -1,4 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="mobile_payments.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="4136"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="0" parent="0"/><expanded_item id="1" parent="1"/><expanded_item id="0" parent="2"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="mobile_payments" custom_title="0" dock_id="1" table="4,15:mainmobile_payments"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011e00ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">SELECT 
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="mobile_payments.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="4136"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="0" parent="0"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="0" parent="2"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="mobile_payments" custom_title="0" dock_id="1" table="4,15:mainmobile_payments"/><dock_state state="000000ff00000000fd0000000100000002000005bb00000390fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000000005bb0000012900ffffff000002880000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="mobile_payments" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="159"/><column index="2" value="39"/><column index="3" value="79"/><column index="4" value="87"/><column index="5" value="178"/><column index="6" value="173"/><column index="7" value="165"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">SELECT 
+    Date, 
+    &quot;Total Agent Cash in Cash Out (Value KSh billions)&quot; AS TotalTransactionValue
+FROM 
+    mobile_payments
+ORDER BY 
+    TotalTransactionValue DESC
+LIMIT 100</sql><sql name="SQL 2*">SELECT 
+    COUNT(*) AS MonthsOver80M
+FROM 
+    mobile_payments
+WHERE 
+    &quot;Total Registered Mobile Money Accounts (Millions)&quot; &gt; 80</sql><sql name="SQL 3*">SELECT 
+    strftime('%Y', Date) AS Year, 
+    SUM(&quot;Total Agent Cash in Cash Out (Value KSh billions)&quot;) AS TotalValuePerYear
+FROM 
+    mobile_payments
+GROUP BY 
+    Year
+ORDER BY 
+    Year</sql><sql name="SQL 4*">SELECT 
+    Date, 
+    &quot;Active Agents&quot;
+FROM 
+    mobile_payments
+ORDER BY 
+    &quot;Active Agents&quot; DESC
+LIMIT 3</sql><sql name="SQL 5*">SELECT 
     Date, 
     &quot;Total Agent Cash in Cash Out (Volume Million)&quot;, 
     &quot;Total Agent Cash in Cash Out (Value KSh billions)&quot;
@@ -8,18 +35,37 @@ WHERE
     &quot;Total Agent Cash in Cash Out (Volume Million)&quot; &lt; 100
     AND &quot;Total Agent Cash in Cash Out (Value KSh billions)&quot; &gt; 500
 ORDER BY 
-    Date;</sql><sql name="SQL 2*">SELECT 
-    Date, 
-    &quot;Total Agent Cash in Cash Out (Value KSh billions)&quot; AS TotalTransactionValue
+    Date;</sql><sql name="SQL 6*">SELECT 
+    Date,
+    ROUND((&quot;Total Agent Cash in Cash Out (Value KSh billions)&quot; * 1000) / &quot;Total Agent Cash in Cash Out (Volume Million)&quot;, 2) AS AvgValuePerTransaction_KSh
 FROM 
     mobile_payments
 ORDER BY 
-    TotalTransactionValue DESC
-LIMIT 1</sql><sql name="SQL 3*">SELECT 
-    Date, 
-    &quot;Active Agents&quot;
+    Date;</sql><sql name="SQL 7*">SELECT 
+    Date,
+    &quot;Total Agent Cash in Cash Out (Volume Million)&quot;,
+    CASE 
+        WHEN &quot;Total Agent Cash in Cash Out (Volume Million)&quot; &gt;= 100 THEN '🔥🔥'
+        WHEN &quot;Total Agent Cash in Cash Out (Volume Million)&quot; BETWEEN 200 AND 299 THEN '🚀'
+        WHEN &quot;Total Agent Cash in Cash Out (Volume Million)&quot; BETWEEN 100 AND 199 THEN '👍'
+        ELSE '😴'
+    END AS ActivityLevel
 FROM 
     mobile_payments
 ORDER BY 
-    &quot;Active Agents&quot; DESC
-LIMIT 3</sql><current_tab id="2"/></tab_sql></sqlb_project>
+    Date;</sql><sql name="SQL 8*">WITH AccountsGrowth AS (
+    SELECT 
+        Date,
+        &quot;Total Registered Mobile Money Accounts (Millions)&quot; AS Accounts,
+        LAG(&quot;Total Registered Mobile Money Accounts (Millions)&quot;) OVER (ORDER BY Date) AS PreviousMonthAccounts
+    FROM 
+        mobile_payments
+)
+SELECT 
+    Date,
+    Accounts,
+    ROUND(((Accounts - PreviousMonthAccounts) / PreviousMonthAccounts) * 100, 2) AS GrowthRatePercent
+FROM 
+    AccountsGrowth
+WHERE 
+    PreviousMonthAccounts IS NOT NULL</sql><current_tab id="7"/></tab_sql></sqlb_project>
